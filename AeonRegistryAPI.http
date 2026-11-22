@@ -1,0 +1,11 @@
+@AeonRegistryAPI_HostAddress = http://localhost:5226
+
+GET {{AeonRegistryAPI_HostAddress}}/openapi/v1.json
+Accept: application/json
+
+###
+
+GET {{AeonRegistryAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
