@@ -6,14 +6,14 @@ public static class HomeEndpoints
 {
     public static IEndpointRouteBuilder MapHomeEndpoints(this IEndpointRouteBuilder route)
     {
-        var homeGroup = route.MapGroup("/api/home").WithTags("Home");
-        homeGroup.MapGet("/welcome", GetWelcomeMessage).WithName("GetWelcomeMessage");
+        var homeGroup = route.MapGroup("/api/home");
+        homeGroup.MapGet("/welcome", GetWelcomeMessage);
         return route;
     }
 
     private static async Task<Ok<WelcomeResponse>> GetWelcomeMessage()
     {
-        var response = new WelcomeResponse("Welcome to Aeon Registry!", "0.0.0", DateTime.Now.ToString());
+        var response = new WelcomeResponse("", "", "");
         return TypedResults.Ok(response);
     }
 }

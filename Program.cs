@@ -1,4 +1,7 @@
 using AeonRegistryAPI.Data;
+using AeonRegistryAPI.Features.Home;
+using AeonRegistryAPI.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
@@ -9,6 +12,15 @@ builder.Services.AddOpenApi();
 var connectionString = DataUtility.GetConnectionString(builder.Configuration);
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
 
+builder.Services.AddIdentityApiEndpoints<ApplicationUser>()
+.AddRoles<IdentityRole>()
+.AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddAuthorizationBuilder()
+.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+
+builder.Services.AddValidation();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -18,5 +30,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.MapHomeEndpoints();
 
 app.Run();
